@@ -251,10 +251,8 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     CGFloat textBoundary = isOnFirstLine ? firstLineRightBoundary : rightBoundary;
     CGFloat availableWidthForTextField = textBoundary - curX;
     if (availableWidthForTextField < MINIMUM_TEXTFIELD_WIDTH) {
-        isOnFirstLine = NO;
         curX = PADDING_LEFT + TEXT_FIELD_HSPACE;
         curY += STANDARD_ROW_HEIGHT+VSPACE;
-        totalHeight += STANDARD_ROW_HEIGHT;
         // Adjust the width
         availableWidthForTextField = rightBoundary - curX;
     }
