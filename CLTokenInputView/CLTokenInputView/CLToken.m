@@ -7,17 +7,25 @@
 //
 
 #import "CLToken.h"
+#import "CommPortalAppDelegate.h"
+#import "contactManager.h"
+#import "AbstractContact.h"
+#import "MSGUtils.h"
 
 @implementation CLToken
 
-- (id)initWithDisplayText:(NSString *)displayText context:(NSObject *)context
+- (id)initWithBareJid:(NSString*) bareJid
 {
-    self = [super init];
-    if (self) {
-        self.displayText = displayText;
-        self.context = context;
-    }
-    return self;
+  self = [super init];
+  
+  AbstractContact* contact = [[CommPortalAppDelegate sharedInstance].contactManager contactWithChatAddress:bareJid];
+  
+  if (self)
+  {
+    self.displayText = [MSGUtils getContactNameFromAbstractContact:contact andBareJID:bareJid] ;
+    self.context = bareJid;
+  }
+  return self;
 }
 
 - (BOOL)isEqual:(id)object
