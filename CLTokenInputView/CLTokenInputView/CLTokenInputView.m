@@ -60,7 +60,8 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
     self.fieldLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.fieldLabel.font = self.textField.font;
-    self.fieldLabel.textColor = [UIColor lightGrayColor];
+    self.fieldLabel.textColor = [UIColor darkGrayColor];
+    self.fieldLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:self.fieldLabel];
     self.fieldLabel.hidden = YES;
 
