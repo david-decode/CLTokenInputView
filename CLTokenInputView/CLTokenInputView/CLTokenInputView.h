@@ -38,6 +38,10 @@
  * frames to make sure the token view still fits.
  */
 - (void)tokenInputView:(CLTokenInputView *)view didChangeHeightTo:(CGFloat)height;
+/**
+ * Called when a token has been selected.
+ */
+- (void)tokenInputView:(CLTokenInputView *)view didSelectToken:(CLToken *)token;
 
 @end
 
@@ -60,9 +64,11 @@
 @property (readonly, nonatomic) CGFloat textFieldDisplayOffset;
 @property (readonly, nonatomic) NSString *text;
 
+- (void)appendText:(NSString *)text;
 - (void)addToken:(CLToken *)token;
 - (void)removeToken:(CLToken *)token;
 - (CLToken *)tokenizeTextfieldText;
+- (CLToken *)selectedToken;
 
 // Editing
 - (void)beginEditing;

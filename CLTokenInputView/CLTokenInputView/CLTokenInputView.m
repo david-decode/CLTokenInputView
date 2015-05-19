@@ -165,6 +165,11 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     return [self.tokens copy];
 }
 
+- (void)appendText:(NSString *)text
+{
+  [self.textField setText:text];
+}
+
 - (CLToken *)tokenizeTextfieldText
 {
     CLToken *token = nil;
@@ -398,8 +403,23 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self selectTokenView:tokenView animated:YES];
 }
 
-
 #pragma mark - Token selection
+-(CLToken *)selectedToken
+{
+  for (CLTokenView *tokenView in self.tokenViews)
+  {
+    if (tokenView.selected==YES)
+    {
+      NSInteger index = [self.tokenViews indexOfObject:tokenView];
+      if (index != NSNotFound) {
+        CLToken *selectedToken = [self.tokens objectAtIndex:index];
+        return selectedToken;
+      }
+    }
+  }
+  
+  return nil;
+}
 
 - (void)selectTokenView:(CLTokenView *)tokenView animated:(BOOL)animated
 {
@@ -409,6 +429,17 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
             [otherTokenView setSelected:NO animated:animated];
         }
     }
+  
+  //Add delegate method to handle token selection...
+  if ([self.delegate respondsToSelector:@selector(tokenInputView:didSelectToken:)])
+  {
+    NSInteger index = [self.tokenViews indexOfObject:tokenView];
+    if (index != NSNotFound) {
+      CLToken *selectedToken = [self.tokens objectAtIndex:index];
+      [self.delegate tokenInputView:self didSelectToken:selectedToken];
+      return;
+    }
+  }
 }
 
 - (void)unselectAllTokenViewsAnimated:(BOOL)animated
