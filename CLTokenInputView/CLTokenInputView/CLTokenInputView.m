@@ -272,8 +272,11 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
     CGFloat oldContentHeight = self.intrinsicContentHeight;
     self.intrinsicContentHeight = CGRectGetMaxY(textFieldRect)+PADDING_BOTTOM;
-    [self invalidateIntrinsicContentSize];
-
+    if ([self respondsToSelector:@selector(invalidateIntrinsicContentSize)])
+    {
+      [self invalidateIntrinsicContentSize];
+    }
+  
     if (oldContentHeight != self.intrinsicContentHeight) {
         if ([self.delegate respondsToSelector:@selector(tokenInputView:didChangeHeightTo:)]) {
             [self.delegate tokenInputView:self didChangeHeightTo:self.intrinsicContentSize.height];

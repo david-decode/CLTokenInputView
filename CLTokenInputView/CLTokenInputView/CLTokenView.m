@@ -61,17 +61,29 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
         // Configure for the token, unselected shows "[displayText]," and selected is "[displayText]"
         NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText];
-        NSMutableAttributedString *attrString =
-        [[NSMutableAttributedString alloc] initWithString:labelString
-                                               attributes:@{NSFontAttributeName : self.label.font,
-                                                            NSForegroundColorAttributeName : [UIColor lightGrayColor]}];
-        NSRange tintRange = [labelString rangeOfString:token.displayText];
-        // Make the name part the system tint color
-        [attrString setAttributes:@{NSForegroundColorAttributeName : tintColor}
-                            range:tintRange];
-        self.label.attributedText = attrString;
-        self.selectedLabel.text = token.displayText;
-
+      
+      
+        if ([self.label respondsToSelector:@selector(setAttributedText:)])
+        {
+          NSMutableAttributedString *attrString =
+          [[NSMutableAttributedString alloc] initWithString:labelString
+                                                 attributes:@{NSFontAttributeName : self.label.font,
+                                                              NSForegroundColorAttributeName : [UIColor lightGrayColor]}];
+          NSRange tintRange = [labelString rangeOfString:token.displayText];
+          // Make the name part the system tint color
+          [attrString setAttributes:@{NSForegroundColorAttributeName : tintColor}
+                              range:tintRange];
+          self.label.attributedText = attrString;
+          self.selectedLabel.text = token.displayText;
+        }
+        else
+        {
+          self.label.textColor = [UIColor blackColor];
+          [self.label setText:labelString];
+          self.selectedLabel.textColor = [UIColor blueColor];
+          [self.selectedLabel setText:token.displayText];
+        }
+      
         // Listen for taps
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
         [self addGestureRecognizer:tapRecognizer];
@@ -84,8 +96,16 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
 - (CGSize)intrinsicContentSize
 {
-    CGSize labelIntrinsicSize = self.selectedLabel.intrinsicContentSize;
+  if ([self.selectedLabel respondsToSelector:@selector(intrinsicContentSize)])
+  {
+      CGSize labelIntrinsicSize = self.selectedLabel.intrinsicContentSize;
+      return CGSizeMake(labelIntrinsicSize.width+(2.0*PADDING_X), labelIntrinsicSize.height+(2.0*PADDING_Y));
+  }
+  else
+  {
+    CGSize labelIntrinsicSize = self.label.bounds.size;
     return CGSizeMake(labelIntrinsicSize.width+(2.0*PADDING_X), labelIntrinsicSize.height+(2.0*PADDING_Y));
+  }
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
