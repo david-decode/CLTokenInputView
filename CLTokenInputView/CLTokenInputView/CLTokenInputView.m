@@ -313,7 +313,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
         if (textField.text.length == 0) {
             CLTokenView *tokenView = self.tokenViews.lastObject;
             if (tokenView) {
-                [self selectTokenView:tokenView animated:YES];
+                [self selectTokenView:tokenView fromDeleteKey:YES animated:YES];
                 [self.textField resignFirstResponder];
             }
         }
@@ -403,7 +403,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
 - (void)tokenViewDidRequestSelection:(CLTokenView *)tokenView
 {
-    [self selectTokenView:tokenView animated:YES];
+  [self selectTokenView:tokenView fromDeleteKey:NO animated:YES];
 }
 
 #pragma mark - Token selection
@@ -424,7 +424,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
   return nil;
 }
 
-- (void)selectTokenView:(CLTokenView *)tokenView animated:(BOOL)animated
+- (void)selectTokenView:(CLTokenView *)tokenView fromDeleteKey:(BOOL)fromDeleteKey animated:(BOOL)animated
 {
     [tokenView setSelected:YES animated:animated];
     for (CLTokenView *otherTokenView in self.tokenViews) {
@@ -432,7 +432,13 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
             [otherTokenView setSelected:NO animated:animated];
         }
     }
-  
+
+  if (fromDeleteKey)
+  {
+    // We do't want keyboard deletes to call the delegate, just taps.
+    return;
+  }
+
   //Add delegate method to handle token selection...
   if ([self.delegate respondsToSelector:@selector(tokenInputView:didSelectToken:)])
   {
