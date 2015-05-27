@@ -80,7 +80,7 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
         {
           self.label.textColor = [UIColor blackColor];
           [self.label setText:labelString];
-          self.selectedLabel.textColor = [UIColor blueColor];
+          self.selectedLabel.textColor = [UIColor whiteColor];
           [self.selectedLabel setText:token.displayText];
         }
       
@@ -103,8 +103,9 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
   }
   else
   {
-    CGSize labelIntrinsicSize = self.label.bounds.size;
-    return CGSizeMake(labelIntrinsicSize.width+(2.0*PADDING_X), labelIntrinsicSize.height+(2.0*PADDING_Y));
+    //for iOS5 support
+    CGSize labelSize = CGSizeMake(60.0, 24.0);
+    return [self sizeThatFits:labelSize];
   }
 }
 
