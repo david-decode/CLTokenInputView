@@ -402,6 +402,9 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
         return;
     }
     [self removeTokenAtIndex:index];
+
+    // Clearing text programmatically doesn't call this automatically
+    [self onTextFieldDidChange:self.textField];
 }
 
 - (void)tokenViewDidRequestSelection:(CLTokenView *)tokenView
