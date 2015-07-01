@@ -252,10 +252,4 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
     return YES;
 }
 
-//IB - added this to preserve keyboard type when selecting for edit, otherwise suggestion bar draws.
--(UITextAutocorrectionType) autocorrectionType
-{
-    return UITextAutocorrectionTypeNo;
-}
-
 @end
