@@ -19,6 +19,7 @@
 /** Used for storing anything that would be useful later on */
 @property (strong, nonatomic) NSObject *context;
 
-- (id)initWithBareJid:(NSString*) bareJid;
+
+- (id)initWithDisplayText:(NSString *)displayText context:(NSObject *)context;
 
 @end
