@@ -54,6 +54,10 @@
  */
 - (void)tokenInputView:(CLTokenInputView *)view didSelectToken:(CLToken *)token;
 
+// The CLTokenInputView is a supercharged UITextField, so it should really parallel the UITextFieldDelegate.
+// For the moment, I've only added the methods I care about.
+- (BOOL)tokenInputView:(CLTokenInputView *)view shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+
 @end
 
 @interface CLTokenInputView : UIView

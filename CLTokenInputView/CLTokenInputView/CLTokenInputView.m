@@ -348,6 +348,17 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     return NO;
 }
 
+- (BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string
+{
+  BOOL shouldChange = YES;
+  if ([self.delegate respondsToSelector:@selector(tokenInputView:shouldChangeCharactersInRange:replacementString:)]) {
+    shouldChange = [self.delegate tokenInputView:self shouldChangeCharactersInRange:range replacementString:string];
+  }
+
+  return shouldChange;
+}
 
 #pragma mark - Text Field Changes
 
