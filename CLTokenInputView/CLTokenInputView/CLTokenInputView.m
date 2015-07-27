@@ -95,6 +95,22 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
 #pragma mark - Tint color
 
+- (void)setTintColor:(UIColor *)tintColor
+{
+  if ([self respondsToSelector:@selector(tintColor)])
+  {
+    self.tintColor = tintColor;
+  }
+  else
+  {
+    for (UIView *tokenView in self.tokenViews)
+    {
+      tokenView.tintColor = tintColor;
+    }
+  }
+
+  self.textField.textColor = tintColor;
+}
 
 - (void)tintColorDidChange
 {
