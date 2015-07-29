@@ -127,17 +127,20 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
     }
     self.label.textColor = tintColor;
     self.selectedBackgroundView.backgroundColor = tintColor;
-    NSMutableAttributedString *attrString = [self.label.attributedText mutableCopy];
-    NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText];
-    NSRange tintRange = [labelString rangeOfString:self.displayText];
-    // Make the overall text color gray
-    [attrString setAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]}
-                        range:NSMakeRange(0, attrString.length)];
-    // Make the name part the system tint color
-    [attrString setAttributes:@{NSForegroundColorAttributeName : tintColor}
-                        range:tintRange];
-    self.label.attributedText = attrString;
 
+    if ([self.label respondsToSelector:@selector(setAttributedText:)])
+    {
+      NSMutableAttributedString *attrString = [self.label.attributedText mutableCopy];
+      NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText];
+      NSRange tintRange = [labelString rangeOfString:self.displayText];
+      // Make the overall text color gray
+      [attrString setAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]}
+                          range:NSMakeRange(0, attrString.length)];
+      // Make the name part the system tint color
+      [attrString setAttributes:@{NSForegroundColorAttributeName : tintColor}
+                          range:tintRange];
+      self.label.attributedText = attrString;
+    }
 }
 
 
