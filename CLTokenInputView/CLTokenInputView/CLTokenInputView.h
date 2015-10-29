@@ -58,6 +58,8 @@
 // For the moment, I've only added the methods I care about.
 - (BOOL)tokenInputView:(CLTokenInputView *)view shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 
+- (NSString*)tokenInputViewUnselectedLabelFormat:(CLTokenInputView*)view;
+
 @end
 
 @interface CLTokenInputView : UIView
@@ -84,6 +86,8 @@
 - (void)removeToken:(CLToken *)token;
 - (CLToken *)tokenizeTextfieldText;
 - (CLToken *)selectedToken;
+
+- (void)updateLabels;
 
 // Editing
 - (void)beginEditing;

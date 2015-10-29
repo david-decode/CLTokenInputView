@@ -23,7 +23,7 @@ static CGFloat const STANDARD_ROW_HEIGHT = 25.0;
 
 static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_X
 
-@interface CLTokenInputView () <CLBackspaceDetectingTextFieldDelegate, CLTokenViewDelegate>
+@interface CLTokenInputView () <CLBackspaceDetectingTextFieldDelegate, CLTokenViewDelegate, CLTokenInputViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *tokens;
 @property (strong, nonatomic) NSMutableArray *tokenViews;
@@ -92,6 +92,13 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     return CGSizeMake(UIViewNoIntrinsicMetric, MAX(45, self.intrinsicContentHeight));
 }
 
+- (void)updateLabels
+{
+  for (CLTokenView *tokenView in self.tokenViews)
+  {
+    [tokenView updateLabels];
+  }
+}
 
 #pragma mark - Tint color
 
@@ -130,10 +137,10 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
     [self.tokens addObject:token];
     CLTokenView *tokenView = [[CLTokenView alloc] initWithToken:token];
+    tokenView.delegate = self;
     if ([self respondsToSelector:@selector(tintColor)]) {
         tokenView.tintColor = self.tintColor;
     }
-    tokenView.delegate = self;
     if ([self respondsToSelector:@selector(intrinsicContentSize)])
     {
       CGSize intrinsicSize = tokenView.intrinsicContentSize;
@@ -448,6 +455,18 @@ replacementString:(NSString *)string
 - (void)tokenViewDidRequestSelection:(CLTokenView *)tokenView
 {
   [self selectTokenView:tokenView fromDeleteKey:NO animated:YES];
+}
+
+- (NSString*)tokenViewUnselectedLabelFormat:(CLTokenView *)tokenView
+{
+  if ([self.delegate respondsToSelector:@selector(tokenInputViewUnselectedLabelFormat:)])
+  {
+    return [self.delegate tokenInputViewUnselectedLabelFormat:self];
+  }
+  else
+  {
+    return nil;
+  }
 }
 
 #pragma mark - Token selection

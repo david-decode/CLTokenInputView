@@ -17,6 +17,9 @@
 - (void)tokenViewDidRequestDelete:(CLTokenView *)tokenView replaceWithText:(NSString *)replacementText;
 - (void)tokenViewDidRequestSelection:(CLTokenView *)tokenView;
 
+@optional
+- (NSString*)tokenViewUnselectedLabelFormat:(CLTokenView *)tokenView;
+
 @end
 
 
@@ -31,5 +34,7 @@
 
 // For iOS 6 compatibility, provide the setter tintColor
 - (void)setTintColor:(UIColor *)tintColor;
+
+- (void)updateLabels;
 
 @end
