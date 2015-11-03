@@ -110,6 +110,11 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
   }
   else
   {
+    // A value of nil represents reset the tint to the default
+    if (!tintColor)
+    {
+      tintColor = [UIColor darkTextColor];
+    }
     for (UIView *tokenView in self.tokenViews)
     {
       tokenView.tintColor = tintColor;
