@@ -79,9 +79,8 @@
 @property (readonly, nonatomic) NSArray *allTokens;
 @property (readonly, nonatomic, getter = isEditing) BOOL editing;
 @property (readonly, nonatomic) CGFloat textFieldDisplayOffset;
-@property (readonly, nonatomic) NSString *text;
+@property (readwrite, nonatomic) NSString *text;
 
-- (void)appendText:(NSString *)text;
 - (void)addToken:(CLToken *)token;
 - (void)removeToken:(CLToken *)token;
 - (CLToken *)tokenizeTextfieldText;

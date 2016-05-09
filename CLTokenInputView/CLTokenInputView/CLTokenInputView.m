@@ -196,11 +196,6 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     return [self.tokens copy];
 }
 
-- (void)appendText:(NSString *)text
-{
-  [self.textField setText:text];
-}
-
 - (CLToken *)tokenizeTextfieldText
 {
     CLToken *token = nil;
@@ -430,10 +425,21 @@ replacementString:(NSString *)string
 
 #pragma mark - Textfield text
 
-
 - (NSString *)text
 {
     return self.textField.text;
+}
+
+- (void)setText:(NSString *)text
+{
+  if ([self textField:self.textField
+shouldChangeCharactersInRange:NSMakeRange(0, self.textField.text.length)
+    replacementString:text])
+  {
+    self.textField.text = text;
+
+    [self onTextFieldDidChange:self];
+  }
 }
 
 
