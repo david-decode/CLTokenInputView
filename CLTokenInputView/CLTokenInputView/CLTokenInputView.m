@@ -25,7 +25,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
 @interface CLTokenInputView () <CLBackspaceDetectingTextFieldDelegate, CLTokenViewDelegate, CLTokenInputViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *tokens;
+@property (strong, nonatomic) NSMutableArray<CLToken*> *tokens;
 @property (strong, nonatomic) NSMutableArray *tokenViews;
 @property (strong, nonatomic) CLBackspaceDetectingTextField *textField;
 @property (strong, nonatomic) UILabel *fieldLabel;
@@ -165,6 +165,14 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self repositionViews];
 }
 
+- (void)removeAllTokens
+{
+  for (CLToken* token in self.allTokens)
+  {
+    [self removeToken:token];
+  }
+}
+
 - (void)removeToken:(CLToken *)token
 {
     NSInteger index = [self.tokens indexOfObject:token];
@@ -191,7 +199,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self repositionViews];
 }
 
-- (NSArray *)allTokens
+- (NSArray<CLToken*> *)allTokens
 {
     return [self.tokens copy];
 }

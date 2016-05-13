@@ -76,13 +76,14 @@
 @property (assign, nonatomic) IBInspectable UITextAutocorrectionType autocorrectionType;
 @property (assign, nonatomic) IBInspectable BOOL drawBottomBorder;
 
-@property (readonly, nonatomic) NSArray *allTokens;
+@property (readonly, nonatomic) NSArray<CLToken*> *allTokens;
 @property (readonly, nonatomic, getter = isEditing) BOOL editing;
 @property (readonly, nonatomic) CGFloat textFieldDisplayOffset;
 @property (readwrite, nonatomic) NSString *text;
 
 - (void)addToken:(CLToken *)token;
 - (void)removeToken:(CLToken *)token;
+- (void)removeAllTokens;
 - (CLToken *)tokenizeTextfieldText;
 - (CLToken *)selectedToken;
 
